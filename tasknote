@@ -37,14 +37,14 @@
 # 	- View Note Feature
 #	- Allow relative path for FOLDER
 
-EDITOR=vim
-TASKBIN=task
-VIEWER=cat
+EDITOR=${EDITOR:-vim}
+TASKBIN=/usr/bin/task
+VIEWER=${PAGER:-cat}
 
 # FOLDER to store notes in. Must already exist.
 # If you sync tasks, FOLDER should be a location that syncs and is available to
 # other computers, i.e. ~/dropbox/tasknotes
-FOLDER="~/Dropbox/tasks/notes/"
+FOLDER="~/.task/notes/"
 
 # Check for existence of $FOLDER
 if [ ! -d $FOLDER ]; then
@@ -61,7 +61,7 @@ if [ ! -d $FOLDER ]; then
 fi
 
 # Preferred extension for tasknotes
-EXT=".txt"
+EXT=".md"
 
 # Message that gets annotated to the task to indicate that notes exist
 NOTEMSG="See Notes File"
@@ -103,7 +103,7 @@ $SHELL -c "$EDITOR $file"
 # Create a note message representing the first line of
 # the edited note file.
 if [ -f $file ]; then
-  NOTEMSG="[tasknote] `head -1 $file`"
+  NOTEMSG="[tasknote] $file"
   # remove any previous annotation - we want only a single
   # tasknote annotation. Detection works through the
   # [tasknote] annotation prefix
