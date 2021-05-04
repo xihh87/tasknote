@@ -44,7 +44,7 @@ VIEWER=${PAGER:-cat}
 # FOLDER to store notes in. Must already exist.
 # If you sync tasks, FOLDER should be a location that syncs and is available to
 # other computers, i.e. ~/dropbox/tasknotes
-FOLDER="~/.task/notes/"
+FOLDER="$HOME/.task/notes/"
 
 # Check for existence of $FOLDER
 if [ ! -d $FOLDER ]; then
