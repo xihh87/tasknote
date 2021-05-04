@@ -79,7 +79,17 @@ uuid=`$TASKBIN $1 uuids`
 
 # build full path & file name to store notes in
 folder=`echo $FOLDER | sed "s|^~|$HOME|"`
-file="$folder$uuid$EXT"
+
+select_filename() {
+	local note="$(${TASKBIN} _get ${uuid}.note)"
+	if [ "x${note}" != "x" ]; then
+		echo "${note}"
+	else
+		file="$folder$uuid$EXT"
+	fi
+}
+
+file="$(select_filename)"
 
 # determine if notes file already exists
 fileexists=0
