@@ -85,11 +85,16 @@ select_filename() {
 	if [ "x${note}" != "x" ]; then
 		echo "${note}"
 	else
-		file="$folder$uuid$EXT"
+	(
+		echo "$folder$uuid$EXT"
+		snotes-list
+	) | m
 	fi
 }
 
 file="$(select_filename)"
+
+${TASKBIN} ${uuid} modify note:${file}
 
 # determine if notes file already exists
 fileexists=0
@@ -109,16 +114,5 @@ fi
 
 #create/edit $file with editor
 $SHELL -c "$EDITOR $file"
-
-# Create a note message representing the first line of
-# the edited note file.
-if [ -f $file ]; then
-  NOTEMSG="[tasknote] $file"
-  # remove any previous annotation - we want only a single
-  # tasknote annotation. Detection works through the
-  # [tasknote] annotation prefix
-  $SHELL -c "$TASKBIN $* denotate \"[tasknote]\""
-  $SHELL -c "$TASKBIN $* annotate '$NOTEMSG'"
-fi
 
 exit 0
